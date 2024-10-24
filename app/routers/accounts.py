@@ -12,7 +12,7 @@ async def create_account(account: schemas.Account_Creation, db:Session = Depends
     hashed_password = utils.hasher(account.password)
     account.password = hashed_password
 
-    new_account = models.Account(**account.dict())
+    new_account = models.Account(**account.model_dump())
     db.add(new_account)
     db.commit()
     db.refresh(new_account)
