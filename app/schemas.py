@@ -7,7 +7,7 @@ class Account(BaseModel):
     email: str
     created_at: datetime
 
-    class Config:
+    class ConfigDict:
         from_attributes = True  # Instead of orm_mode = True
 
 class Account_Creation(BaseModel):

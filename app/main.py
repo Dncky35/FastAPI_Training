@@ -10,4 +10,4 @@ app.include_router(votes.router)
 
 @app.get("/")
 async def root():
-    return {"message":"welcone to main page"}
+    return {"message":"welcome to main page"}
