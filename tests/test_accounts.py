@@ -1,9 +1,8 @@
 import pytest
-from app.main import app
 from app import schemas, config
 from jose import jwt
 
-def test_root(setup_db, client):
+def test_root(client):
     res = client.get("/")
     assert res.json().get("message") == "welcome to main page"
     assert res.status_code == 200

@@ -8,7 +8,7 @@ router = APIRouter(
     tags=["Posts"]
 )
 
-@router.get("/", status_code=status.HTTP_302_FOUND, response_model=List[schemas.Post_Show])
+@router.get("/", status_code=status.HTTP_200_OK, response_model=List[schemas.Post_Show])
 async def posts_get(db:Session = Depends(database.get_db), curr_account = Depends(oauth2.get_current_user), 
                     owner_id:int = 0, limit:int = 20, offset:int = 0, search:Optional[str] = ""):
         
@@ -29,7 +29,7 @@ async def posts_get(db:Session = Depends(database.get_db), curr_account = Depend
 
     return posts
 
-@router.get("/{id}", status_code=status.HTTP_302_FOUND, response_model=schemas.Post_Show)
+@router.get("/{id}", status_code=status.HTTP_200_OK, response_model=schemas.Post_Show)
 async def post_get(id, db:Session = Depends(database.get_db), curr_acct = Depends(oauth2.get_current_user)):
     result = db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(models.Vote, models.Post.id == models.Vote.post_id, isouter=True).group_by(models.Post.id)
     post = result.filter(models.Post.id == id).first()

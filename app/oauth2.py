@@ -1,6 +1,6 @@
 from fastapi import Depends, status, HTTPException
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, jwt 
+from jose import JWTError, jwt  # type: ignore
 from datetime import datetime, timedelta, UTC
 from . import schemas, database, models, config
 from sqlalchemy.orm import Session
