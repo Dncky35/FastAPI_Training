@@ -20,7 +20,7 @@ def override_get_db():
 app.dependency_overrides[database.get_db] = override_get_db
 
 # Pytest fixture to manage database setup/teardown
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def setup_db():
 
     # Create tables
@@ -42,9 +42,23 @@ def setup_db():
     # Drop tables if needed (optional, since transactions are rolled back)
     # Base.metadata.drop_all(bind=engine)
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def client(setup_db):
     return TestClient(app)
+
+@pytest.fixture
+def test_account(client):
+    user_data = {
+        "email":"test@testmail.com",
+        "password":"123456789Password"
+    }
+    res = client.post("/accounts", json=user_data)
+
+    assert res.status_code == 201
+    test_account = res.json()
+    test_account['password'] = user_data["password"]
+
+    return test_account
 
 
 

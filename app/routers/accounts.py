@@ -9,6 +9,10 @@ router = APIRouter(
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Account)
 async def create_account(account: schemas.Account_Creation, db:Session = Depends(database.get_db)):
+
+    if not account.password:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=f"Password should be provided")
+
     hashed_password = utils.hasher(account.password)
     account.password = hashed_password
 
