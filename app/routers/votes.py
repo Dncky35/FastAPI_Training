@@ -10,7 +10,7 @@ router = APIRouter(
 @router.post("/", status_code=status.HTTP_202_ACCEPTED)
 def vote(vote: schemas.Vote, db:Session = Depends(database.get_db), curr_acct: int = Depends(oauth2.get_current_user)):
     print(f"post ID: {vote.post_id}, Acct ID: {curr_acct.id}")
-    vote_query = db.query(models.Vote).filter(models.Vote.posts_id == vote.post_id, models.Vote.account_id == curr_acct.id)
+    vote_query = db.query(models.Vote).filter(models.Vote.post_id == vote.post_id, models.Vote.account_id == curr_acct.id)
     vote_found = vote_query.first()
 
     post_query = db.query(models.Post).filter(models.Post.id == vote.post_id)
@@ -30,7 +30,7 @@ def vote(vote: schemas.Vote, db:Session = Depends(database.get_db), curr_acct: i
             
         else:
             if vote_found:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Vote does not exist")
+                raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Vote does not exist")
             else:
                 vote_query.delete(synchronize_session=False)
                 db.commit()
