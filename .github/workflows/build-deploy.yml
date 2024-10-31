@@ -47,24 +47,32 @@ jobs:
                 pytest -x -s
 
             
-            - name: Login Docker Hub
-              uses: docker/login-action@v3
-              with:
-                username: ${{ secrets.DOCKER_HUB_USERNAME }}
-                password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+            # - name: Login Docker Hub
+            #   uses: docker/login-action@v3
+            #   with:
+            #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
+            #     password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-            - name: Set up Docker Buildx
-              id: buildx
-              uses: docker/setup-buildx-action@v3
+            # - name: Set up Docker Buildx
+            #   id: buildx
+            #   uses: docker/setup-buildx-action@v3
               
 
-            - name: Build and push image
-              uses: docker/build-push-action@v6
-              with:
-                context: ./
-                file: ./Dockerfile
-                builder: ${{ steps.buildx.outputs.name }}
-                push: true
-                tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi_training:latest
-                cache-from: type=local,src=/tmp/.buildx-cache
-                cache-to: type=local,dest=/tmp/.buildx-cache
+            # - name: Build and push image
+            #   uses: docker/build-push-action@v6
+            #   with:
+            #     context: ./
+            #     file: ./Dockerfile
+            #     builder: ${{ steps.buildx.outputs.name }}
+            #     push: true
+            #     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi_training:latest
+            #     cache-from: type=local,src=/tmp/.buildx-cache
+            #     cache-to: type=local,dest=/tmp/.buildx-cache
+
+    deploy:
+        runs-on: ubuntu-22.04
+        needs: [build]
+
+        steps:
+            - name: deploying the server
+              run: echo "Server has been started to deeploying."
