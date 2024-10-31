@@ -27,8 +27,8 @@ jobs:
                 options: >-
                     --health-cmd pg_isready
                     --health-interval 10s
-                    --healt-timeout 5s
-                    --healt-retries 5 
+                    --health-timeout 5s
+                    --health-retries 5
 
         runs-on: ubuntu-22.04
         steps:
