@@ -3,7 +3,7 @@ name: Build and Deploy Code
 on: [push, pull_request]
 
 jobs:
-    job1:
+    build:
         environment:
             name: Testing
         env:
@@ -68,4 +68,3 @@ jobs:
                 tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi_training:latest
                 cache-from: type=local,src=/tmp/.buildx-cache
                 cache-to: type=local,dest=/tmp/.buildx-cache
-                
