@@ -21,4 +21,4 @@ app.include_router(votes.router)
 
 @app.get("/")
 async def root():
-    return {"message":"welcome to updated main page"}
+    return {"message":"welcome to updated via CD pipeline main page"}
