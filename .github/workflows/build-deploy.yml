@@ -87,7 +87,7 @@ jobs:
             password: ${{ secrets.PROD_PASSWORD }}
             # port: ${{ secrets.PORT }}
             script: |
-              cd app/scr
+              cd app/src
               git pull
               echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart fastapi
               
