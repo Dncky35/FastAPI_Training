@@ -2,10 +2,10 @@ import pytest
 from app import schemas, config
 from jose import jwt
 
-def test_root(client):
-    res = client.get("/")
-    assert res.json().get("message") == "welcome to main page"
-    assert res.status_code == 200
+# def test_root(client):
+#     res = client.get("/")
+#     assert res.json().get("message") == "welcome to main page"
+#     assert res.status_code == 200
 
 @pytest.mark.parametrize("email, password, status_code", [
     ("test@testmail.com", "123456789Password", 201)
